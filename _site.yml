@@ -1,0 +1,16 @@
+name: "Mi Nombre"
+output_dir: "."
+navbar:
+  title: "Ejemplo WEB"
+  left:
+  - text: "Paper"
+    href: index.html
+  right:
+  - icon: fa-envelope fa-lg
+    href: (aquí correo)
+  - icon: fa-github fa-lg
+    href: https://github.com/nicolasggodoym/precariedad-sector-servicios
+output:
+  html_document:
+    theme: cerulean # yeti  spacelab simplex sandstone cosmo cerulean paper darkly flatly lumen readable
+    css: 'styles.css'
