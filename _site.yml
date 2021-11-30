@@ -1,9 +1,9 @@
-name: "Mi Nombre"
+name: "¿Cómo se distribuye la precariedad laboral en Chile? Una propuesta tipológica para analizar las condiciones de trabajo del sector servicios durante la pandemia"
 output_dir: "."
 navbar:
-  title: "Ejemplo WEB"
+  title: "Precariedad laboral"
   left:
-  - text: "Paper"
+  - text: "Investigación"
     href: index.html
   right:
   - icon: fa-envelope fa-lg
