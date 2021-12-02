@@ -1,11 +1,17 @@
-----
+---
 title: "Procesamiento de datos"
-author: "Emilia Barrientos, Pablo Campos, Nicolás Godoy, Monserrat Greene y Gonzalo López"
-output: 
-  html_document: 
-    toc: yes
+author: "Emilia Barrientos, Pablo Campos, Nicolás Godoy, Monserrat Greene y Gonzalo
+  López"
+date: "2021"
+output:
+  html_document:
     highlight: textmate
     theme: paper
+    toc: yes
+    toc_float: true
+editor_options: 
+  markdown: 
+    wrap: sentence
 ---
 # Código de procesamiento de datos
 

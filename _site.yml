@@ -8,7 +8,7 @@ navbar:
   - text: "Investigación"
     href: paper.html
   - text: "Procesamiento de datos"
-    href: procesamiento/procesamiento.html
+    href: procesamiento.html
   right:
   - icon: fa-envelope fa-lg
     href: nicolas.godoy.m@ug.uchile.cl

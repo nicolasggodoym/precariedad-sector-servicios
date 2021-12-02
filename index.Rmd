@@ -6,9 +6,6 @@ output:
   html_document:
     highlight: textmate
     theme: paper
-    toc: yes
-    code_folding: hide
-    toc_float: true
 editor_options: 
   markdown: 
     wrap: sentence
@@ -20,4 +17,4 @@ La carpeta **input** contiene dos carpetas. La primera, _bib_, que contiene los 
 
 Asimismo, la carpeta **procesamiento** contiene el código de procesamiento, en que se refinaron los datos de la Encuesta Suplementaria de Ingresos (ESI) en su versión 2020. El archivo _procesamiento.rmd_ es reproducible, y detalla los pasos seguidos para procesar los datos de manera adecuada para el análisis. 
 
-En la carpeta raíz del repositorio, por último, se encuentra el archivo **paper.rmd**, en el cual se presenta la investigación sobre el análisis de la precariedad en el sector de servicios de la economía chilena. 
+En la carpeta raíz del repositorio, por último, se encuentran dos archivos relevantes. Primero,  el código de procesamiento, en que se refinaron los datos de la Encuesta Suplementaria de Ingresos (ESI) en su versión 2020. El archivo _procesamiento.rmd_ es reproducible, y detalla los pasos seguidos para procesar los datos de manera adecuada para el análisis. Luego, el archivo **paper.rmd**, en el cual se presenta la investigación sobre el análisis de la precariedad en el sector de servicios de la economía chilena. 
