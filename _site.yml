@@ -3,11 +3,15 @@ output_dir: "."
 navbar:
   title: "Precariedad laboral"
   left:
-  - text: "Investigación"
+  - text: "Sobre el repositorio"
     href: index.html
+  - text: "Investigación"
+    href: paper.html
+  - text: "Procesamiento de datos"
+    href: procesamiento/procesamieno.html
   right:
   - icon: fa-envelope fa-lg
-    href: (aquí correo)
+    href: nicolas.godoy.m@ug.uchile.cl
   - icon: fa-github fa-lg
     href: https://github.com/nicolasggodoym/precariedad-sector-servicios
 output:
