@@ -10,8 +10,6 @@ navbar:
   - text: "Procesamiento de datos"
     href: procesamiento.html
   right:
-  - icon: fa-envelope fa-lg
-    href: nicolas.godoy.m@ug.uchile.cl
   - icon: fa-github fa-lg
     href: https://github.com/nicolasggodoym/precariedad-sector-servicios
 output:
