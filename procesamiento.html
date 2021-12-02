@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>procesamiento.knit</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Precariedad laboral</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Investigación</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="(aquí correo)">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/nicolasggodoym/precariedad-sector-servicios">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+
+</div>
+
+
+<table>
+<tbody>
+<tr class="odd">
+<td>title: “Procesamiento de datos”</td>
+</tr>
+<tr class="even">
+<td>author: “Emilia Barrientos, Pablo Campos, Nicolás Godoy, Monserrat Greene y Gonzalo López”</td>
+</tr>
+<tr class="odd">
+<td>output:</td>
+</tr>
+<tr class="even">
+<td>html_document:</td>
+</tr>
+<tr class="odd">
+<td>toc: yes</td>
+</tr>
+<tr class="even">
+<td>highlight: textmate</td>
+</tr>
+<tr class="odd">
+<td>theme: paper</td>
+</tr>
+</tbody>
+</table>
+<div id="código-de-procesamiento-de-datos" class="section level1">
+<h1>Código de procesamiento de datos</h1>
+<p>Este código de procesamiento de datos tiene por objeto preparar los datos de la <strong>Encuesta Suplementaria de Ingresos (2020)</strong>, para poder realizar el análisis de clases latentes según la operacionalización de Blanco y Julián (2019) para las y los trabajadores del sector servicios.</p>
+<div id="cargar-librerías" class="section level2">
+<h2>1. Cargar librerías</h2>
+<p>Se cargan las librerías necesarias para manipular los datos y presentar las tablas necesarias</p>
+<pre class="r"><code>pacman::p_load(tidyverse, #Muchas cosas
+               haven, #Cargar datos.dta
+               sjPlot, #Crear tablas y gráficos
+               sjmisc,#Explorar datos
+               dplyr, #Manipular datos
+               sjlabelled, #Etiquetar datos
+               car) #Recodificar</code></pre>
+</div>
+<div id="cargar-datos" class="section level2">
+<h2>2. Cargar datos</h2>
+<p>Los datos por trabajar son descargados directamente desde la <a href="https://www.ine.cl/estadisticas/sociales/ingresos-y-gastos/encuesta-suplementaria-de-ingresos">página web del Instituto Nacional de Estadísticas (INE)</a>, con la función <code>read_dta</code> de <code>haven</code>.</p>
+<pre class="r"><code>data &lt;- read_dta(&quot;https://www.ine.cl/docs/default-source/encuesta-suplementaria-de-ingresos/bbdd/stata_esi/2020/esi-2020---personas.dta?sfvrsn=7a4b0e2b_4&amp;download=true&quot;)</code></pre>
+<p>El objeto presenta 368 columnas y 71.935 filas.</p>
+</div>
+<div id="procesar-datos" class="section level2">
+<h2>3. Procesar datos</h2>
+<p>Se crea un nuevo objeto llamado data_proc, en que se filtran aquellos trabajadores cuya empresa no se aboca a una actividad económica de servicios (todos aquellos cuyos valores en la columna b13_rev4cl_caenes son distintos a 1 (<em>Agricultura, ganadería, silvicultura y pesca</em>), 2 (<em>Explotación de minas y canteras</em>), 3 (<em>Industrias manufactureras</em>) y 6 (<em>Construcción</em>)). Se seleccionan variables demográficas (sexo, edad y educacion), y de cada una de las dimensiones:</p>
+<ol style="list-style-type: decimal">
+<li>(In)estabilidad: variables contrato</li>
+<li>(In)seguridad: variables cotiza</li>
+<li>(In)suficiencia: variable ingresos</li>
+<li>Condiciones de trabajo: variables cond_</li>
+<li>Cronopiedad: variable horas</li>
+</ol>
+<pre class="r"><code>data_proc &lt;- data %&gt;% 
+  filter(b13_rev4cl_caenes != 1 | 
+         b13_rev4cl_caenes != 2 |
+         b13_rev4cl_caenes != 3 |
+         b13_rev4cl_caenes != 6) %&gt;% 
+  select(contrato = b8,
+         contrato_duracion = b9,
+         contrato_sub = b12,
+         cotiza_prev = b7a_1,
+         cotiza_salud = b7a_2,
+         cotiza_seguro = b7a_3,
+         ingresos = ing_t_p,
+         lugar_trab = b16,
+         cond_vacaciones = b7b_1,
+         cond_enfermedad = b7b_2,
+         cond_maternidad = b7b_3,
+         cond_guarderia = b7b_4,
+         horas = c2_1_3,
+         sexo,
+         tramo_edad,
+         educacion = cine)</code></pre>
+<p>Una vez filtrados los datos, data_proc presenta 16 columnas y 3.756 filas.</p>
+<div id="transformar-datatype" class="section level3">
+<h3>3.1. Transformar <em>datatype</em></h3>
+<p>Las variables categóricas se transforman a tipo <strong>factor</strong>. Variables numéricas (ingresos y horas) son transformadas a tipo <strong>factor</strong> para poder incorporarlas en el modelo de clases latentes. Vale recalcar que, para el caso de la variable ingresos, esta se recodificó como <em>quintiles de ingreso</em>. Además, se recodifican los valores nulos como <code>NA</code>. Luego, se verifica la estructura de los datos con <code>str()</code>, para verificar los cambios.</p>
+<p>Se recodificó la variable <em>lugar de trabajo</em>, colapsando las categorías de respuesta. Primero, se unieron las categorías <em>En instalaciones u oficinas del cliente o empleado</em> y <em>En la casa del empleador o cliente</em>, resultando en <em>En instalaciones, oficina o casa del cliente o empleador</em>. Segundo, se colapsaron las categorías <em>En instalaciones u oficinas propias o arrendadas</em>, <em>En la oficina, local, taller o fábrica, anexo a su hogar (en el mismo predio)</em> y <em>En su propio hogar</em>, formando <em>En instalaciones, oficinas o casas propias o arrendadas</em>. Tercero, <em>En la calle o vía pública</em> se fusionó con la categoría <em>En otros lugares</em>, resultando en <em>En la calle, vía pública, u otros</em>. Finalmente, se colapsó <em>En obras de construcción, mineras o similares</em> con <em>En predio agrícola o espacio marítimo o aéreo</em> para formar la nueva categoría <em>En obras de construcción, mineras, predio agrícola o similares</em>.</p>
+<p>Asimismo, se recodificó la variable <em>tramo_edad</em>, formando las categorías <em>15 a 19 años</em>, <em>20 a 29 años</em>, <em>25 a 49 años</em>, <em>50 a 64 años</em> y <em>65 años o mas</em>.</p>
+<pre class="r"><code>quantile(data_proc$ingresos, c(.2,.4,.6,.8))</code></pre>
+<pre><code>##      20%      40%      60%      80% 
+## 291973.5 380500.1 500000.0 779786.8</code></pre>
+<pre class="r"><code>data_proc &lt;- data_proc %&gt;% 
+  mutate_all (~(as.numeric(.))) %&gt;%  
+  mutate(ingresos = case_when(ingresos &lt;= 291974 ~ &quot;$0 a $291.974&quot;,
+                              ingresos &gt; 291974 &amp; ingresos &lt;= 380500 ~ &quot;$291.975 a $380.500&quot;,
+                              ingresos &gt; 380500 &amp; ingresos &lt;= 500000 ~ &quot;$380.501 a $500.000&quot;,
+                              ingresos &gt; 500000 &amp; ingresos &lt;= 779787 ~ &quot;$500.001 a $779.787&quot;,
+                              ingresos &gt; 779787 ~ &quot;$779.788 o mas&quot;, 
+                              TRUE ~ NA_character_),
+         edad = car::recode(.$tramo_edad, recodes = &quot;(1) = &#39;15 a 19 anos&#39;;
+                            c(2, 3) = &#39;20 a 29 anos&#39;;
+                            c(4, 5, 6, 7) = &#39;25 a 49 anos&#39;;
+                            c(8, 9, 10) = &#39;50 a 64 anos&#39;;
+                            c(11, 12) = &#39;65 anos o mas&#39;&quot;),
+         horas = case_when(horas &lt;= 30 ~ &quot;Igual o menor a 30 horas semanales&quot;,
+                           horas &gt; 30 &amp; horas &lt;= 45 ~ &quot;Entre 31 y 45 horas semanales&quot;,
+                           horas &gt; 45 ~ &quot;Mayor a 45 horas semanales&quot;, 
+                           TRUE ~ NA_character_),
+         contrato = car::recode(.$contrato, recodes = c(&quot;1 = &#39;Si&#39;; 2 = &#39;No&#39;&quot;), 
+                                as.factor = T, levels = c(&#39;Si&#39;, &#39;No&#39;)),
+         contrato_duracion = car::recode(.$contrato_duracion, recodes = c(&quot;1 = &#39;Definido&#39;; 2 = &#39;Indefinido&#39;&quot;),
+                                         as.factor = T, levels = c(&#39;Definido&#39;, &#39;Indefinido&#39;)),
+         contrato_sub = car::recode(.$contrato_sub, recodes = c(&quot;1 = &#39;Directamente con la empresa en donde trabaja&#39;; 
+                                                                2 = &#39;Con un contratista o subcontratista de bienes y servicios&#39;; 
+                                                                3 = &#39;Con una empresa de servicios temporales o suministradora de trabajadores&#39;; 
+                                                                4 = &#39;Con un enganchador (contratista agrícola)&#39;&quot;),
+                                    as.factor = T, levels = c(&#39;Directamente con la empresa en donde trabaja&#39;, 
+                                                              &#39;Con un contratista o subcontratista de bienes y servicios&#39;, 
+                                                              &#39;Con una empresa de servicios temporales o suministradora de trabajadores&#39;, 
+                                                              &#39;Con un enganchador (contratista agrícola)&#39;)),
+         lugar_trab = car::recode(.$lugar_trab, recodes = c(&quot;c(1,2) = &#39;En instalaciones, oficina o casa del cliente o empleador&#39;;
+                                                            c(3,4,5) = &#39;En instalaciones u oficinas propias o arrendadas, en hogar propio o anexos&#39;;
+                                                            c(6,9) = &#39;En la calle o via publica, u otro&#39;;
+                                                            c(7,8) = &#39;En obras de construccion, mineras, predio agricola o similares&#39;&quot;),
+                                  as.factor = T, levels = c(&#39;En instalaciones, oficina o casa del cliente o empleador&#39;,
+                                                            &#39;En instalaciones u oficinas propias o arrendadas, en hogar propio o anexos&#39;, 
+                                                            &#39;En la calle o via publica, u otro&#39;, 
+                                                            &#39;En obras de construccion, mineras, predio agricola o similares&#39;)),
+         sexo = car::recode(.$sexo, recodes = c(&quot;1 = &#39;Hombre&#39;; 2 = &#39;Mujer&#39;&quot;), as.factor = T,
+                            levels = c(&#39;Hombre&#39;, &#39;Mujer&#39;)),
+         educacion = car::recode(.$educacion, recodes = c(&quot;1 = &#39;Nunca estudio&#39;;
+                                                               2 = &#39;Educacion preescolar&#39;;
+                                                               3 = &#39;Educacion primaria (nivel 1)&#39;;
+                                                               4 = &#39;Educacion primaria (nivel 2)&#39;;
+                                                               5 = &#39;Educacion secundaria&#39;;
+                                                               6 = &#39;Educacion tecnica (superior no universitaria)&#39;;
+                                                               7 = &#39;Educacion universitaria&#39;;
+                                                               8 = &#39;Postitulos y maestria&#39;;
+                                                               9 = &#39;Doctorado&#39;&quot;),
+                                 as.factor = T,
+                                 levels = c(&#39;Nunca estudio&#39;,
+                                            &#39;Educacion preescolar&#39;,
+                                            &#39;Educacion primaria (nivel 1)&#39;,
+                                            &#39;Educacion primaria (nivel 2)&#39;,
+                                            &#39;Educacion secundaria&#39;,
+                                            &#39;Educacion tecnica (superior no universitaria)&#39;,
+                                            &#39;Educacion universitaria&#39;,
+                                            &#39;Postitulos y maestria&#39;,
+                                            &#39;Doctorado&#39;))) %&gt;% 
+  mutate_at(vars(&quot;cond_vacaciones&quot;, &quot;cond_enfermedad&quot;, &quot;cond_maternidad&quot;, &quot;cond_guarderia&quot;, &quot;cotiza_prev&quot;, &quot;cotiza_salud&quot;, &quot;cotiza_seguro&quot;), ~(car::recode(., recodes = c(&quot;1 = &#39;Si&#39;; 2 = &#39;No&#39;&quot;), as.factor = T))) %&gt;%
+  mutate(ingresos = factor(.$ingresos, levels = c(&quot;$0 a $291.974&quot;,
+                                                  &quot;$291.975 a $380.500&quot;,
+                                                  &quot;$380.501 a $500.000&quot;,
+                                                  &quot;$500.001 a $779.787&quot;,
+                                                  &quot;$779.788 o más&quot;)),
+         horas = factor(.$horas, levels = c(&quot;Igual o menor a 30 horas semanales&quot;,
+                                            &quot;Entre 31 y 45 horas semanales&quot;,
+                                            &quot;Mayor a 45 horas semanales&quot;))) %&gt;% 
+  mutate_at(vars(&quot;contrato&quot;, &quot;contrato_duracion&quot;, &quot;contrato_sub&quot;, &quot;cotiza_prev&quot;, &quot;cotiza_salud&quot;, &quot;cotiza_seguro&quot;, &quot;lugar_trab&quot;, &quot;cond_vacaciones&quot;, &quot;cond_enfermedad&quot;, &quot;cond_maternidad&quot;, &quot;cond_guarderia&quot;), ~(car::recode(., recodes = &quot;c(77, 88, 99) = NA&quot;))) %&gt;%
+  mutate_at(vars(c(&quot;horas&quot;, &quot;educacion&quot;)), ~(car::recode(., recodes = &quot;c(888, 999) = NA&quot;))) %&gt;%
+  select(-tramo_edad)
+
+str(data_proc)</code></pre>
+<pre><code>## tibble [3,756 × 16] (S3: tbl_df/tbl/data.frame)
+##  $ contrato         : Factor w/ 2 levels &quot;No&quot;,&quot;Si&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ contrato_duracion: Factor w/ 2 levels &quot;Definido&quot;,&quot;Indefinido&quot;: 1 2 2 2 1 1 1 2 2 1 ...
+##  $ contrato_sub     : Factor w/ 3 levels &quot;Con un contratista o subcontratista de bienes y servicios&quot;,..: 2 1 1 1 1 1 1 1 1 3 ...
+##  $ cotiza_prev      : Factor w/ 2 levels &quot;No&quot;,&quot;Si&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ cotiza_salud     : Factor w/ 2 levels &quot;No&quot;,&quot;Si&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ cotiza_seguro    : Factor w/ 2 levels &quot;No&quot;,&quot;Si&quot;: 2 2 2 2 1 2 2 2 2 1 ...
+##  $ ingresos         : Factor w/ 5 levels &quot;$0 a $291.974&quot;,..: 2 2 4 4 2 4 1 3 1 NA ...
+##  $ lugar_trab       : Factor w/ 4 levels &quot;En instalaciones u oficinas propias o arrendadas, en hogar propio o anexos&quot;,..: 4 2 4 2 1 4 2 2 3 2 ...
+##  $ cond_vacaciones  : Factor w/ 2 levels &quot;No&quot;,&quot;Si&quot;: 1 2 2 2 2 1 1 2 2 2 ...
+##  $ cond_enfermedad  : Factor w/ 2 levels &quot;No&quot;,&quot;Si&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ cond_maternidad  : Factor w/ 2 levels &quot;No&quot;,&quot;Si&quot;: NA 2 2 2 2 2 2 2 2 2 ...
+##  $ cond_guarderia   : Factor w/ 2 levels &quot;No&quot;,&quot;Si&quot;: NA 1 2 2 1 1 1 2 1 1 ...
+##  $ horas            : Factor w/ 3 levels &quot;Entre 31 y 45 horas semanales&quot;,..: 1 1 1 1 2 1 2 1 1 1 ...
+##  $ sexo             : Factor w/ 2 levels &quot;Hombre&quot;,&quot;Mujer&quot;: 1 1 1 2 1 1 2 2 1 2 ...
+##  $ educacion        : Factor w/ 8 levels &quot;Doctorado&quot;,&quot;Educacion primaria (nivel 1)&quot;,..: 3 4 4 4 6 4 2 5 4 6 ...
+##  $ edad             : chr [1:3756] &quot;25 a 49 anos&quot; &quot;15 a 19 anos&quot; &quot;25 a 49 anos&quot; &quot;25 a 49 anos&quot; ...</code></pre>
+</div>
+<div id="eliminar-casos-perdidos" class="section level3">
+<h3>3.2. Eliminar casos perdidos</h3>
+<p>Se eliminan los valores nulos, para poder realizar los cálculos posteriores de manera adecuada.</p>
+<pre class="r"><code>sum(is.na(data_proc))</code></pre>
+<pre><code>## [1] 2342</code></pre>
+<pre class="r"><code>dim(data_proc)</code></pre>
+<pre><code>## [1] 3756   16</code></pre>
+<pre class="r"><code>data_proc &lt;-na.omit(data_proc)
+dim(data_proc)</code></pre>
+<pre><code>## [1] 2531   16</code></pre>
+<p>Una vez eliminados los casos perdidos, el objeto pasa a tener 16 columnas y 2.531 filas.</p>
+</div>
+</div>
+</div>
+<div id="etiquetar-variables" class="section level1">
+<h1>4. Etiquetar variables</h1>
+<p>Se asignan etiquetas a cada variable con la función <code>set_label()</code> de <code>sjlabelled</code></p>
+<pre class="r"><code>#(In)estabilidad
+data_proc$contrato = set_label(data_proc$contrato, &quot;Existencia de contrato&quot;)
+data_proc$contrato_duracion = set_label(data_proc$contrato_duracion, &quot;Duracion de contrato&quot;)
+data_proc$contrato_sub = set_label(data_proc$contrato_sub, &quot;Acuerdo de trabajo&quot;)
+
+#(In)seguridad
+data_proc$cotiza_prev = set_label(data_proc$cotiza_prev, &quot;Cotizacion en prevision&quot;)
+data_proc$cotiza_salud = set_label(data_proc$cotiza_salud, &quot;Cotizacion en salud&quot;)
+data_proc$cotiza_seguro = set_label(data_proc$cotiza_seguro, &quot;Cotizacion en seguro de desempleo&quot;)
+
+#(In)suficiencia
+data_proc$ingresos = set_label(data_proc$ingresos, &quot;Quintiles de ingreso&quot;)
+
+#Condiciones de trabajo
+data_proc$lugar_trab = set_label(data_proc$lugar_trab, &quot;Lugar de trabajo&quot;)
+data_proc$cond_vacaciones = set_label(data_proc$cond_vacaciones, &quot;Derecho a vacaciones&quot;)
+data_proc$cond_enfermedad = set_label(data_proc$cond_enfermedad, &quot;Derecho a dias pagos por enfermedad&quot;)
+data_proc$cond_maternidad = set_label(data_proc$cond_maternidad, &quot;Derecho a dias pagos por pa/maternidad&quot;)
+data_proc$cond_guarderia = set_label(data_proc$cond_guarderia, &quot;Derecho a guarderia infantil&quot;)
+
+#Cronopiedad
+data_proc$horas &lt;- set_label(data_proc$horas, &#39;Total horas semanales habituales en actividad principal&#39;)
+
+#Socio-demográficas
+data_proc$sexo &lt;- set_label(data_proc$sexo, &#39;Sexo&#39;)
+data_proc$edad &lt;- set_label(data_proc$edad, &#39;Edad&#39;)
+data_proc$educacion &lt;- set_label(data_proc$educacion, &#39;Educacion&#39;)</code></pre>
+<div id="generar-tablas-descriptivas" class="section level2">
+<h2>4. Generar tablas descriptivas</h2>
+<p>Una vez realizado el procesamiento anterior, se realizan tablas resumen para dar cuenta de las categorías de respuesta de cada una de las variables de componen cada dimensión:</p>
+<pre class="r"><code>inestabilidad &lt;- data_proc %&gt;% 
+  select(1:3)
+
+sjPlot::view_df(inestabilidad)</code></pre>
+<table style="border-collapse:collapse; border:none;">
+<caption>
+Data frame: inestabilidad
+</caption>
+<tr>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+ID
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Name
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Label
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Values
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Value Labels
+</th>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+contrato
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Existencia de contrato
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+No<br>Si
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+contrato_duracion
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Duracion de contrato
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Definido<br>Indefinido
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+3
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+contrato_sub
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Acuerdo de trabajo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Con un contratista o subcontratista de bienes y servicios<br>Con un enganchador (contratista agrícola)<br>Con una empresa de servicios temporales o suministradora de trabajadores
+</td>
+</tr>
+</table>
+<pre class="r"><code>inseguridad &lt;- data_proc %&gt;% 
+  select(4:6)
+
+sjPlot::view_df(inseguridad)</code></pre>
+<table style="border-collapse:collapse; border:none;">
+<caption>
+Data frame: inseguridad
+</caption>
+<tr>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+ID
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Name
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Label
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Values
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Value Labels
+</th>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+cotiza_prev
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Cotizacion en prevision
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+No<br>Si
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+cotiza_salud
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Cotizacion en salud
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+No<br>Si
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+3
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+cotiza_seguro
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Cotizacion en seguro de desempleo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+No<br>Si
+</td>
+</tr>
+</table>
+<pre class="r"><code>insuficiencia &lt;- data_proc %&gt;% 
+  select(7)
+
+sjPlot::view_df(insuficiencia)</code></pre>
+<table style="border-collapse:collapse; border:none;">
+<caption>
+Data frame: insuficiencia
+</caption>
+<tr>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+ID
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Name
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Label
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Values
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Value Labels
+</th>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+ingresos
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Quintiles de ingreso
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+$0 a $291.974<br>$291.975 a $380.500<br>$380.501 a $500.000<br>$500.001 a $779.787<br>$779.788 o más
+</td>
+</tr>
+</table>
+<pre class="r"><code>condiciones &lt;- data_proc %&gt;% 
+  select(8:12)
+
+sjPlot::view_df(condiciones)</code></pre>
+<table style="border-collapse:collapse; border:none;">
+<caption>
+Data frame: condiciones
+</caption>
+<tr>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+ID
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Name
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Label
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Values
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Value Labels
+</th>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+lugar_trab
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Lugar de trabajo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+En instalaciones u oficinas propias o arrendadas, en hogar propio o anexos<br>En instalaciones, oficina o casa del cliente o empleador<br>En la calle o via publica, u otro<br>En obras de construccion, mineras, predio agricola o similares
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+cond_vacaciones
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Derecho a vacaciones
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+No<br>Si
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+3
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+cond_enfermedad
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Derecho a dias pagos por enfermedad
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+No<br>Si
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+4
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+cond_maternidad
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Derecho a dias pagos por pa/maternidad
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+No<br>Si
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+5
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+cond_guarderia
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Derecho a guarderia infantil
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+No<br>Si
+</td>
+</tr>
+</table>
+<pre class="r"><code>cronopiedad &lt;- data_proc %&gt;% 
+  select(13)
+
+sjPlot::view_df(cronopiedad)</code></pre>
+<table style="border-collapse:collapse; border:none;">
+<caption>
+Data frame: cronopiedad
+</caption>
+<tr>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+ID
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Name
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Label
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Values
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Value Labels
+</th>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+horas
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Total horas semanales habituales en actividad<br>principal
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Entre 31 y 45 horas semanales<br>Igual o menor a 30 horas semanales<br>Mayor a 45 horas semanales
+</td>
+</tr>
+</table>
+<pre class="r"><code>demograficas &lt;- data_proc %&gt;% 
+  select(14:16)
+
+sjPlot::view_df(demograficas)</code></pre>
+<table style="border-collapse:collapse; border:none;">
+<caption>
+Data frame: demograficas
+</caption>
+<tr>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+ID
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Name
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Label
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Values
+</th>
+<th style="border-bottom:double; font-style:italic; font-weight:normal; padding:0.2cm; text-align:left; vertical-align:top;">
+Value Labels
+</th>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+1
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+sexo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Sexo
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Hombre<br>Mujer
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+2
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+educacion
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Educacion
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top; background-color:#eeeeee">
+Doctorado<br>Educacion primaria (nivel 1)<br>Educacion primaria (nivel 2)<br>Educacion secundaria<br>Educacion tecnica (superior no universitaria)<br>Educacion universitaria<br>Nunca estudio<br>Postitulos y maestria
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+3
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+edad
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+Edad
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+</td>
+<td style="padding:0.2cm; text-align:left; vertical-align:top;">
+&lt;output omitted&gt;
+</td>
+</tr>
+</table>
+</div>
+<div id="exportar-datos-procesados" class="section level2">
+<h2>5. Exportar datos procesados</h2>
+<p>Se exportan los datos en formato .rds, para ahorrar espacio y proceder con el análisis.</p>
+<pre class="r"><code>saveRDS(data_proc, file = &quot;input/data/data_proc.rds&quot;)</code></pre>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
