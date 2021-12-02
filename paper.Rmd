@@ -10,8 +10,8 @@ output:
     toc: yes
     code_folding: hide
     toc_float: true
-bibliography: https://github.com/nicolasggodoym/ciencia-abierta-2021/raw/main/input/bib/ciencia_abierta.bib
-csl: https://github.com/nicolasggodoym/ciencia-abierta-2021/raw/main/input/bib/apa_csl.csl
+bibliography: https://github.com/nicolasggodoym/precariedad-sector-servicios/raw/main/input/bib/ciencia_abierta.bib
+csl: https://github.com/nicolasggodoym/precariedad-sector-servicios/raw/main/input/bib/apa_csl.csl
 editor_options: 
   markdown: 
     wrap: sentence
@@ -208,7 +208,7 @@ options(scipen = 999)
 ```
 
 ```{r data, echo=TRUE, warning=FALSE, message=FALSE, include=FALSE}
-base_proc <- readRDS(url("https://github.com/nicolasggodoym/ciencia-abierta-2021/blob/main/input/data/data_proc.rds?raw=true"))
+base_proc <- readRDS(url("https://github.com/nicolasggodoym/precariedad-sector-servicios/blob/main/input/data/data_proc.rds?raw=true"))
 ```
 
 #### Tabla 1. Descripción de variables por analizar
